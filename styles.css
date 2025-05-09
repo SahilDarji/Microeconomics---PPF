@@ -1,0 +1,1134 @@
+/* Modern color palette */
+:root {
+    --primary: #3a86ff;
+    --primary-dark: #2667cc;
+    --secondary: #ff006e;
+    --tertiary: #8338ec;
+    --accent: #ffbe0b;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --gray: #6c757d;
+    --light-gray: #e9ecef;
+    --success: #38b000;
+    --warning: #ff9e00;
+    --danger: #d90429;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+    
+    /* Scenario colors */
+    --healthcare: #3a86ff;
+    --education: #ff006e;
+    --pandemic: #d90429;
+    --growth: #38b000;
+    --crisis: #dc2f02;
+}
+
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--dark);
+    background-color: var(--light);
+    overflow-x: hidden;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Navigation */
+.main-nav {
+    display: flex;
+    background-color: var(--dark);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-section {
+    padding: 1rem 2rem;
+    color: var(--light);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    text-align: center;
+    flex: 1;
+    font-weight: 500;
+}
+
+.nav-section:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-section.active {
+    background-color: var(--primary);
+}
+
+.nav-section.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid var(--light);
+}
+
+/* Sections */
+.section {
+    display: none;
+    padding: 2rem;
+    animation: fadeIn 0.5s ease;
+}
+
+.section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Intro container */
+.intro-container {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--dark);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--gray);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Content container */
+.content-container {
+    display: flex;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+    .content-container {
+        flex-direction: column;
+    }
+    
+    .section {
+        padding: 1.5rem;
+    }
+    
+    .title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 1rem;
+    }
+    
+    .title {
+        font-size: 1.8rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .tab-container {
+        flex-wrap: wrap;
+    }
+    
+    .tab {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .scenario-buttons {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+    
+    .scenario-btn {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+    
+    .scenario-btn i {
+        font-size: 1.2rem;
+    }
+    
+    .canvas-container {
+        height: 350px;
+    }
+    
+    .tab-content {
+        height: auto;
+        max-height: 500px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section {
+        padding: 0.75rem;
+    }
+    
+    .nav-section {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .title {
+        font-size: 1.5rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .tab {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+    
+    .scenario-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .canvas-container {
+        height: 300px;
+    }
+}
+
+/* Visualization panel */
+.visualization-panel {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.canvas-container {
+    position: relative;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--transition);
+    height: 500px;
+}
+
+.canvas-container:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+#ppfCanvas, #dynamicsPPFCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.interaction-hint {
+    text-align: center;
+    padding: 0.75rem;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 0.5rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+/* Tooltip styling */
+.tooltip {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    z-index: 10;
+    pointer-events: none;
+    transition: var(--transition);
+    opacity: 0;
+    transform: translateY(10px);
+    min-width: 250px;
+    max-width: 300px;
+}
+
+@media (max-width: 480px) {
+    .tooltip {
+        min-width: 200px;
+        max-width: 250px;
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+}
+
+.tooltip.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tooltip-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.tooltip-status {
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.tooltip.on .tooltip-status {
+    color: var(--success);
+}
+
+.tooltip.under .tooltip-status {
+    color: var(--warning);
+}
+
+.tooltip.over .tooltip-status {
+    color: var(--danger);
+}
+
+.tooltip-explanation {
+    font-size: 0.9rem;
+    color: var(--gray);
+    line-height: 1.4;
+}
+
+.tooltip-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+}
+
+.tooltip-row span:first-child {
+    color: var(--gray);
+}
+
+.tooltip-row span:last-child {
+    font-weight: 500;
+}
+
+.tooltip-opportunity-cost {
+    font-size: 0.9rem;
+    color: var(--primary);
+    font-style: italic;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--light-gray);
+}
+
+/* Info panel */
+.info-panel {
+    flex: 1;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+/* Tab navigation */
+.tab-container {
+    display: flex;
+    background-color: var(--light-gray);
+}
+
+.tab {
+    padding: 1rem;
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    border-bottom: 3px solid transparent;
+    font-weight: 500;
+}
+
+.tab:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.tab.active {
+    border-bottom-color: var(--primary);
+    color: var(--primary);
+}
+
+/* Tab content */
+.tab-content {
+    padding: 1.5rem;
+    height: 600px;
+    overflow-y: auto;
+}
+
+.tab-pane {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+.tab-pane h2 {
+    margin-bottom: 1rem;
+    color: var(--dark);
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.tab-pane h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background-color: var(--primary);
+}
+
+.tab-pane p {
+    margin-bottom: 1rem;
+}
+
+.highlight {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.action-prompt {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: var(--light-gray);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.action-prompt i {
+    font-size: 1.5rem;
+    color: var(--accent);
+}
+
+/* Key points styling */
+.keypoint {
+    display: flex;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--light-gray);
+    border-radius: 0.5rem;
+    transition: var(--transition);
+}
+
+.keypoint:hover {
+    transform: translateX(5px);
+}
+
+.keypoint-icon {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.keypoint-icon.efficient {
+    background-color: rgba(56, 176, 0, 0.2);
+    color: var(--success);
+}
+
+.keypoint-icon.inefficient {
+    background-color: rgba(217, 4, 41, 0.2);
+    color: var(--danger);
+}
+
+.keypoint-icon.unattainable {
+    background-color: rgba(255, 158, 0, 0.2);
+    color: var(--warning);
+}
+
+.keypoint-content h3 {
+    margin-bottom: 0.5rem;
+}
+
+/* Concept styling */
+.concept {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.concept:last-child {
+    border-bottom: none;
+}
+
+.concept h3 {
+    margin-bottom: 0.75rem;
+    color: var(--primary);
+}
+
+/* PPF Dynamics Controls */
+.dynamics-controls {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+}
+
+.controls-section {
+    margin-bottom: 1.5rem;
+}
+
+.controls-section h3 {
+    margin-bottom: 1rem;
+    color: var(--dark);
+    font-size: 1.1rem;
+}
+
+.scenario-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.75rem;
+}
+
+.scenario-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem;
+    background-color: var(--light);
+    color: var(--dark);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-size: 0.9rem;
+}
+
+.scenario-btn i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.scenario-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Active scenario button */
+.scenario-btn.active {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    border: 2px solid white;
+}
+
+.scenario-btn[data-scenario="healthcare-tech"] {
+    color: white;
+    background-color: var(--healthcare);
+}
+
+.scenario-btn[data-scenario="education-tech"] {
+    color: white;
+    background-color: var(--education);
+}
+
+.scenario-btn[data-scenario="pandemic"],
+.scenario-btn[data-scenario="school-closure"] {
+    color: white;
+    background-color: var(--pandemic);
+}
+
+.scenario-btn[data-scenario="economic-growth"] {
+    color: white;
+    background-color: var(--growth);
+}
+
+.scenario-btn[data-scenario="economic-crisis"] {
+    color: white;
+    background-color: var(--crisis);
+}
+
+.scenario-btn[data-scenario="reset"] {
+    background-color: var(--light-gray);
+    color: var(--dark);
+}
+
+.custom-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.control-group label {
+    font-size: 0.9rem;
+    color: var(--gray);
+}
+
+input[type="range"] {
+    width: 100%;
+    height: 6px;
+    background: var(--light-gray);
+    border-radius: 3px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: var(--primary);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: var(--primary);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.1);
+}
+
+#healthcareTechSlider::-webkit-slider-thumb {
+    background: var(--healthcare);
+}
+
+#healthcareTechSlider::-moz-range-thumb {
+    background: var(--healthcare);
+}
+
+#educationTechSlider::-webkit-slider-thumb {
+    background: var(--education);
+}
+
+#educationTechSlider::-moz-range-thumb {
+    background: var(--education);
+}
+
+/* Example boxes */
+.example-box {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: var(--light-gray);
+    border-radius: 0.5rem;
+    transition: var(--transition);
+}
+
+.example-box:hover {
+    box-shadow: var(--shadow);
+}
+
+.example-box h3 {
+    margin-bottom: 0.75rem;
+    color: var(--primary);
+}
+
+.example-box ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.example-box li {
+    margin-bottom: 0.5rem;
+}
+
+.illustration {
+    margin-top: 1rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.illustration img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Example cards */
+.example-card {
+    margin-bottom: 1.5rem;
+    padding: 1.25rem;
+    background-color: var(--light-gray);
+    border-radius: 0.5rem;
+    transition: var(--transition);
+    border-left: 4px solid var(--primary);
+}
+
+.example-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.example-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.example-icon {
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.example-card:nth-child(1) {
+    border-left-color: var(--healthcare);
+}
+
+.example-card:nth-child(1) .example-icon {
+    color: var(--healthcare);
+}
+
+.example-card:nth-child(2) {
+    border-left-color: var(--education);
+}
+
+.example-card:nth-child(2) .example-icon {
+    color: var(--education);
+}
+
+.example-card:nth-child(3) {
+    border-left-color: var(--pandemic);
+}
+
+.example-card:nth-child(3) .example-icon {
+    color: var(--pandemic);
+}
+
+.example-card:nth-child(4) {
+    border-left-color: var(--growth);
+}
+
+.example-card:nth-child(4) .example-icon {
+    color: var(--growth);
+}
+
+.example-card h3 {
+    margin: 0;
+    color: var(--dark);
+}
+
+/* Animations for PPF changes */
+@keyframes ppfShiftOut {
+    from { transform: scale(1); opacity: 1; }
+    to { transform: scale(1.1); opacity: 0.5; }
+}
+
+@keyframes ppfShiftIn {
+    from { transform: scale(0.9); opacity: 0.5; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes ppfRotateHealthcare {
+    from { transform-origin: bottom left; transform: rotate(0deg); opacity: 1; }
+    to { transform-origin: bottom left; transform: rotate(10deg); opacity: 0.5; }
+}
+
+@keyframes ppfRotateEducation {
+    from { transform-origin: top right; transform: rotate(0deg); opacity: 1; }
+    to { transform-origin: top right; transform: rotate(-10deg); opacity: 0.5; }
+}
+
+.ppf-change {
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.ppf-shift-out {
+    animation-name: ppfShiftOut;
+}
+
+.ppf-shift-in {
+    animation-name: ppfShiftIn;
+}
+
+.ppf-rotate-healthcare {
+    animation-name: ppfRotateHealthcare;
+}
+
+.ppf-rotate-education {
+    animation-name: ppfRotateEducation;
+}
+
+/* Coming soon section */
+.coming-soon {
+    padding: 3rem;
+    text-align: center;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+.coming-soon i {
+    font-size: 3rem;
+    color: var(--gray);
+    margin-bottom: 1rem;
+}
+
+.coming-soon h2 {
+    margin-bottom: 1rem;
+}
+
+/* Interactive elements */
+button {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+}
+
+button:hover {
+    background-color: var(--primary-dark);
+}
+
+button.secondary {
+    background-color: var(--light-gray);
+    color: var(--dark);
+}
+
+button.secondary:hover {
+    background-color: var(--gray);
+    color: white;
+}
+
+/* Utility classes */
+.text-center {
+    text-align: center;
+}
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+/* Ensure dynamics section is visible when active */
+#dynamics.section {
+    display: none;
+}
+
+#dynamics.section.active {
+    display: block;
+}
+
+/* PPF Diagram Illustrations */
+.ppf-diagram {
+    position: relative;
+    background-color: white;
+    border: 1px solid var(--light-gray);
+    border-radius: 0.5rem;
+    height: 200px;
+    width: 100%;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+/* Fixed PPF Diagrams - Corrected Curves */
+.ppf-original, .ppf-new {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.ppf-original {
+    border: none;
+    background: transparent;
+}
+
+.ppf-original::before {
+    content: '';
+    position: absolute;
+    left: 10%;
+    bottom: 10%;
+    right: 10%;
+    height: 75%;
+    border: 2px dashed var(--gray);
+    border-top: none;
+    border-left: none;
+    border-radius: 0 0 100% 0;
+}
+
+.ppf-new {
+    border: none;
+    background: transparent;
+}
+
+.ppf-new::before {
+    content: '';
+    position: absolute;
+    left: 10%;
+    bottom: 10%;
+    right: 10%;
+    height: 75%;
+    border: 2px solid var(--primary);
+    border-top: none;
+    border-left: none;
+    border-radius: 0 0 100% 0;
+}
+
+/* Specific curve shapes based on reference images */
+.ppf-shift-out::before {
+    left: 10%;
+    bottom: 10%;
+    right: 5%;
+    height: 85%;
+    border-radius: 0 0 100% 0;
+    border-color: #3a86ff;
+}
+
+.ppf-shift-in::before {
+    left: 10%;
+    bottom: 10%;
+    right: 20%;
+    height: 60%;
+    border-radius: 0 0 100% 0;
+    border-color: #d90429;
+}
+
+.ppf-rotate-healthcare::before {
+    left: 10%;
+    bottom: 10%;
+    right: 10%;
+    height: 85%;
+    border-radius: 0 0 90% 0;
+    transform: rotate(-10deg);
+    transform-origin: bottom left;
+    border-color: #3a86ff;
+}
+
+.ppf-rotate-education::before {
+    left: 10%;
+    bottom: 10%;
+    right: 10%;
+    height: 60%;
+    border-radius: 0 0 80% 0;
+    transform: rotate(10deg);
+    transform-origin: bottom left;
+    border-color: #3a86ff;
+}
+
+.ppf-labels {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+/* Add axis lines */
+.ppf-diagram::after {
+    content: '';
+    position: absolute;
+    left: 10%;
+    bottom: 10%;
+    width: 2px;  /* Vertical line thickness */
+    height: 80%;
+    background-color: var(--dark);
+}
+
+.ppf-diagram::before {
+    content: '';
+    position: absolute;
+    left: 10%;
+    bottom: 10%;
+    width: 80%;
+    height: 2px;  /* Horizontal line thickness */
+    background-color: var(--dark);
+}
+
+.axis-label {
+    position: absolute;
+    font-size: 0.8rem;
+    color: var(--dark);
+    font-weight: 500;
+}
+
+.x-label {
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.y-label {
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+}
+
+.curve-label {
+    position: absolute;
+    font-size: 0.75rem;
+}
+
+.curve-label.original {
+    bottom: 45%;
+    right: 30%;
+    color: var(--gray);
+}
+
+.curve-label.new {
+    bottom: 55%;
+    right: 20%;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .ppf-diagram {
+        height: 180px;
+    }
+    
+    .curve-label.original {
+        bottom: 45%;
+        right: 30%;
+    }
+    
+    .curve-label.new {
+        bottom: 55%;
+        right: 20%;
+    }
+}
+
+@media (max-width: 480px) {
+    .ppf-diagram {
+        height: 150px;
+    }
+    
+    .axis-label {
+        font-size: 0.7rem;
+    }
+    
+    .curve-label {
+        font-size: 0.65rem;
+    }
+    
+    .curve-label.original {
+        bottom: 45%;
+        right: 25%;
+    }
+    
+    .curve-label.new {
+        bottom: 55%;
+        right: 15%;
+    }
+}
+
+/* Dynamics legend */
+.dynamics-legend {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+    padding: 8px 12px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.85rem;
+    z-index: 5;
+}
+
+@media (max-width: 480px) {
+    .dynamics-legend {
+        top: 10px;
+        right: 10px;
+        padding: 5px 8px;
+        font-size: 0.7rem;
+        gap: 5px;
+    }
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 3px;
+    border-radius: 1px;
+}
+
+.legend-color.original {
+    background-color: #aaaaaa;
+    border-top: 1px dashed #aaaaaa;
+    border-bottom: 1px dashed #aaaaaa;
+}
+
+.legend-color.current {
+    background-color: #3a86ff;
+}
+
+.legend-text {
+    color: var(--dark);
+}
+
+/* Make dynamics tooltip visible when shown */
+#dynamicsTooltip.visible {
+    opacity: 1;
+    transform: translateY(0);
+}

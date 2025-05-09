@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Production Possibility Frontier Journey</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div class="nav-section active" data-section="understanding">Understanding PPF</div>
+            <div class="nav-section" data-section="dynamics">PPF Dynamics</div>
+        </nav>
+
+        <!-- Section 1: Understanding PPF -->
+        <section id="understanding" class="section active">
+            <div class="intro-container">
+                <h1 class="title">The Production Possibility Frontier</h1>
+                <p class="subtitle">Discover how societies balance healthcare and education</p>
+            </div>
+
+            <div class="content-container">
+                <!-- Left panel: Visualization -->
+                <div class="visualization-panel">
+                    <div class="canvas-container">
+                        <canvas id="ppfCanvas"></canvas>
+                        <div id="tooltip" class="tooltip">
+                            <div class="tooltip-content">
+                                <div class="tooltip-header">Current Point</div>
+                                <div class="tooltip-row">
+                                    <span>Healthcare:</span>
+                                    <span id="healthcareValue">0</span> units
+                                </div>
+                                <div class="tooltip-row">
+                                    <span>Education:</span>
+                                    <span id="educationValue">0</span> units
+                                </div>
+                                <div class="tooltip-row">
+                                    <span>Opportunity Cost:</span>
+                                    <span id="mocValue">0</span>
+                                </div>
+                                <div class="tooltip-row">
+                                    <span>MRT:</span>
+                                    <span id="mrtValue">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="interaction-hint">
+                        <i class="fas fa-hand-pointer"></i> Drag the point to explore the PPF
+                    </div>
+                </div>
+
+                <!-- Right panel: Explanations -->
+                <div class="info-panel">
+                    <div class="tab-container">
+                        <div class="tab active" data-tab="basics">Basics</div>
+                        <div class="tab" data-tab="keypoints">Key Points</div>
+                        <div class="tab" data-tab="concepts">Concepts</div>
+                    </div>
+
+                    <div class="tab-content">
+                        <!-- Tab 1: PPF Basics -->
+                        <div class="tab-pane active" id="basics">
+                            <h2>What is a Production Possibility Frontier?</h2>
+                            <p>The Production Possibility Frontier (PPF) illustrates the maximum combinations of goods that an economy can produce using all available resources efficiently.</p>
+                            
+                            <p>Our example shows a country that must decide how to allocate resources between two essential public services: <span class="highlight">Healthcare</span> and <span class="highlight">Education</span>.</p>
+                            
+                            <p>The curved shape of the PPF shows an important economic concept: as we produce more of one good, we must give up increasingly more of the other good. This reflects the <span class="highlight">Law of Increasing Opportunity Cost</span>.</p>
+                            
+                            <div class="action-prompt">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Try moving the point along the curve to see this concept in action!</span>
+                            </div>
+                        </div>
+
+                        <!-- Tab 2: Key Points -->
+                        <div class="tab-pane" id="keypoints">
+                            <h2>Key Points on the PPF</h2>
+                            
+                            <div class="keypoint">
+                                <div class="keypoint-icon efficient">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="keypoint-content">
+                                    <h3>Points ON the Curve</h3>
+                                    <p>These represent <span class="highlight">efficient</span> production. All resources are being fully utilized with the best available technology.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="keypoint">
+                                <div class="keypoint-icon inefficient">
+                                    <i class="fas fa-times-circle"></i>
+                                </div>
+                                <div class="keypoint-content">
+                                    <h3>Points INSIDE the Curve</h3>
+                                    <p>These represent <span class="highlight">inefficient</span> production. Resources are being wasted or not fully utilized.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="keypoint">
+                                <div class="keypoint-icon unattainable">
+                                    <i class="fas fa-ban"></i>
+                                </div>
+                                <div class="keypoint-content">
+                                    <h3>Points OUTSIDE the Curve</h3>
+                                    <p>These are <span class="highlight">unattainable</span> with current resources and technology. The economy cannot produce at these levels.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab 3: Key Concepts -->
+                        <div class="tab-pane" id="concepts">
+                            <h2>Understanding the Trade-offs</h2>
+                            
+                            <div class="concept">
+                                <h3>Opportunity Cost</h3>
+                                <p>The amount of one good that must be sacrificed to produce more of another good.</p>
+                                <p>As you move the point along the curve, notice how producing more education requires giving up increasingly more healthcare.</p>
+                            </div>
+                            
+                            <div class="concept">
+                                <h3>Marginal Rate of Transformation (MRT)</h3>
+                                <p>The ratio at which one good can be transformed into another at the margin.</p>
+                                <p>Mathematically, it's the absolute value of the slope of the PPF at any point.</p>
+                                <p>An MRT of 2:1 means 2 units of healthcare must be sacrificed to produce 1 more unit of education.</p>
+                            </div>
+                            
+                            <div class="concept">
+                                <h3>Why is the PPF Curved?</h3>
+                                <p>The PPF is concave (bowed outward) because resources are not equally suited for producing all goods.</p>
+                                <p>As more resources are shifted to education, those least suitable for healthcare are moved first, then increasingly more suitable resources must be transferred, raising the opportunity cost.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: PPF Dynamics -->
+        <section id="dynamics" class="section">
+            <div class="intro-container">
+                <h1 class="title">The Dynamics of the PPF</h1>
+                <p class="subtitle">Explore how real-world events change production possibilities</p>
+            </div>
+
+            <div class="content-container">
+                <!-- Left panel: Visualization -->
+                <div class="visualization-panel">
+                    <div class="canvas-container">
+                        <canvas id="dynamicsPPFCanvas"></canvas>
+                        <div id="dynamicsTooltip" class="tooltip">
+                            <div class="tooltip-content">
+                                <div class="tooltip-header">PPF Changes</div>
+                                <div id="dynamicsTooltipContent">
+                                    Select a scenario to see how the PPF changes
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Controls for PPF changes -->
+                    <div class="dynamics-controls">
+                        <div class="controls-section">
+                            <h3>Custom Adjustments</h3>
+                            <div class="custom-controls">
+                                <div class="control-group">
+                                    <label for="healthcareTechSlider">Healthcare Technology</label>
+                                    <input type="range" id="healthcareTechSlider" min="0" max="100" value="50">
+                                </div>
+                                <div class="control-group">
+                                    <label for="educationTechSlider">Education Technology</label>
+                                    <input type="range" id="educationTechSlider" min="0" max="100" value="50">
+                                </div>
+                                <div class="control-group">
+                                    <label for="resourcesSlider">Total Resources</label>
+                                    <input type="range" id="resourcesSlider" min="0" max="100" value="50">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="controls-section">
+                            <h3>Real-World Scenarios</h3>
+                            <div class="scenario-buttons">
+                                <button class="scenario-btn" data-scenario="healthcare-tech">
+                                    <i class="fas fa-heartbeat"></i>
+                                    AI in Healthcare
+                                </button>
+                                <button class="scenario-btn" data-scenario="education-tech">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    AI in Education
+                                </button>
+                                <button class="scenario-btn" data-scenario="pandemic">
+                                    <i class="fas fa-virus"></i>
+                                    Pandemic
+                                </button>
+                                <button class="scenario-btn" data-scenario="school-closure">
+                                    <i class="fas fa-school"></i>
+                                    School Closure
+                                </button>
+                                <button class="scenario-btn" data-scenario="economic-growth">
+                                    <i class="fas fa-chart-line"></i>
+                                    Economic Growth
+                                </button>
+                                <button class="scenario-btn" data-scenario="economic-crisis">
+                                    <i class="fas fa-chart-line fa-flip-vertical"></i>
+                                    Economic Crisis
+                                </button>
+                                <button class="scenario-btn" data-scenario="reset">
+                                    <i class="fas fa-undo"></i>
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right panel: Explanations -->
+                <div class="info-panel">
+                    <div class="tab-container">
+                        <div class="tab active" data-tab="shifts">Shifts</div>
+                        <div class="tab" data-tab="rotations">Rotations</div>
+                        <div class="tab" data-tab="examples">Examples</div>
+                    </div>
+
+                    <div class="tab-content">
+                        <!-- Tab 1: Shifts -->
+                        <div class="tab-pane active" id="shifts">
+                            <h2>Shifts of the PPF</h2>
+                            <p>A <span class="highlight">shift</span> of the Production Possibility Frontier occurs when the economy's overall capacity to produce goods changes.</p>
+                            
+                            <div class="example-box">
+                                <h3>Outward Shift</h3>
+                                <p>An outward shift happens when the economy gains new resources or implements economy-wide improvements:</p>
+                                <ul>
+                                    <li>New natural resource discoveries</li>
+                                    <li>Population growth</li>
+                                    <li>Technological advances that benefit all sectors</li>
+                                    <li>Better institutional arrangements</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="example-box">
+                                <h3>Inward Shift</h3>
+                                <p>An inward shift happens when the economy loses resources or experiences negative effects:</p>
+                                <ul>
+                                    <li>Natural disasters</li>
+                                    <li>Population decline</li>
+                                    <li>War or conflict</li>
+                                    <li>Environmental degradation</li>
+                                </ul>
+                            </div>
+
+                            <div class="action-prompt">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Try the "Economic Growth" or "Economic Crisis" scenarios to see shifts in action!</span>
+                            </div>
+                        </div>
+
+                        <!-- Tab 2: Rotations -->
+                        <div class="tab-pane" id="rotations">
+                            <h2>Rotations of the PPF</h2>
+                            <p>A <span class="highlight">rotation</span> of the Production Possibility Frontier occurs when the economy becomes more efficient at producing one good relative to the other.</p>
+                            
+                            <div class="example-box">
+                                <h3>Rightward Rotation</h3>
+                                <p>When agricultural sector becomes more efficient (but manufacturing stays the same):</p>
+                                <ul>
+                                    <li>New farming technologies that improve agricultural yields</li>
+                                    <li>Improved irrigation or fertilizer systems</li>
+                                    <li>Land reforms that increase agricultural productivity</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="example-box">
+                                <h3>Leftward Rotation</h3>
+                                <p>When manufacturing becomes more efficient (but agriculture stays the same):</p>
+                                <ul>
+                                    <li>New industrial technologies that improve production</li>
+                                    <li>Manufacturing automation systems</li>
+                                    <li>Factory efficiency improvements</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="action-prompt">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Try the "Healthcare AI" or "Education Platform" scenarios to see rotations in action!</span>
+                            </div>
+                        </div>
+
+                        <!-- Tab 3: Examples -->
+                        <div class="tab-pane" id="examples">
+                            <h2>Real-World Examples</h2>
+                            
+                            <div class="example-card">
+                                <div class="example-header">
+                                    <i class="fas fa-heartbeat example-icon"></i>
+                                    <h3>Healthcare AI Revolution</h3>
+                                </div>
+                                <p>AI diagnostic systems like those developed by Google Health and IBM Watson can analyze medical images and patient data with remarkable accuracy, often outperforming human doctors in certain tasks.</p>
+                                <p>This technology enables healthcare providers to diagnose more patients more accurately without requiring additional resources, causing a <span class="highlight">rotation</span> of the PPF around the education axis.</p>
+                            </div>
+                            
+                            <div class="example-card">
+                                <div class="example-header">
+                                    <i class="fas fa-graduation-cap example-icon"></i>
+                                    <h3>EdTech Revolution</h3>
+                                </div>
+                                <p>Online learning platforms and AI tutoring systems like Khan Academy, Coursera, and Duolingo have revolutionized education by making high-quality learning resources accessible to millions of people.</p>
+                                <p>These platforms allow educators to reach more students with fewer resources, causing a <span class="highlight">rotation</span> of the PPF around the healthcare axis.</p>
+                            </div>
+                            
+                            <div class="example-card">
+                                <div class="example-header">
+                                    <i class="fas fa-virus example-icon"></i>
+                                    <h3>COVID-19 Pandemic</h3>
+                                </div>
+                                <p>The COVID-19 pandemic caused significant disruptions to both healthcare and education systems worldwide. Healthcare systems were overwhelmed with COVID patients, while schools were forced to close.</p>
+                                <p>This situation caused an <span class="highlight">inward shift</span> of the PPF as resources in both sectors were strained or unavailable.</p>
+                            </div>
+                            
+                            <div class="example-card">
+                                <div class="example-header">
+                                    <i class="fas fa-chart-line example-icon"></i>
+                                    <h3>Post-Pandemic Recovery</h3>
+                                </div>
+                                <p>As countries recover from the pandemic, many have implemented stimulus packages and infrastructure investments that benefit both healthcare and education.</p>
+                                <p>These investments cause an <span class="highlight">outward shift</span> of the PPF as new resources become available for both sectors.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
